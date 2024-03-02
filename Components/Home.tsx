@@ -2,7 +2,16 @@ import React from 'react';
 import Pill from './assets/svg/pill.svg';
 import Svg from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
-import {Text, Button, View} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  Button,
+  View,
+} from 'react-native';
 import MaskedView from '@react-native-masked-view/masked-view';
 
 const Home = (props: any) => {
@@ -19,7 +28,7 @@ const Home = (props: any) => {
         </LinearGradient>
       </MaskedView>
       <Button
-        title="Side"
+        title="Go to side page"
         onPress={() => {
           props.navigation.navigate('Side');
         }}

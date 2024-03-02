@@ -13,14 +13,15 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
-  Button,
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import MaskedView from '@react-native-masked-view/masked-view';
-import Pill from './assets/svg/pill.svg';
-import Svg from 'react-native-svg';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Home from './Components/Home';
+import Side from './Components/Side';
 function App(): React.JSX.Element {
+  const Stack = createNativeStackNavigator();
   return (
     <LinearGradient
       colors={[
@@ -29,16 +30,18 @@ function App(): React.JSX.Element {
         'rgba(165,143,215, 1)',
       ]}>
       <SafeAreaView style={{height: '100%'}}>
-        <MaskedView
-          maskElement={
-            <Text style={{fontFamily: 'Roboto-Regular', fontSize: 48}}>
-              Gradient
-            </Text>
-          }>
-          <LinearGradient colors={['rgb(255,86,78)', 'rgb(250,209,38)']}>
-            <View style={{width: 60, height: 60}}></View>
-          </LinearGradient>
-        </MaskedView>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen
+              name="Home"
+              options={{title: 'Home Page'}}
+              component={Home}></Stack.Screen>
+            <Stack.Screen
+              name="Side"
+              options={{title: 'Side Page'}}
+              component={Side}></Stack.Screen>
+          </Stack.Navigator>
+        </NavigationContainer>
       </SafeAreaView>
     </LinearGradient>
   );
