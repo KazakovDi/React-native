@@ -20,9 +20,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import MaskedView from '@react-native-masked-view/masked-view';
 import Pill from './assets/svg/pill.svg';
 import Svg from 'react-native-svg';
+import SplashScreen from 'react-native-splash-screen';
 
 function App(): React.JSX.Element {
   useEffect(() => {
+    SplashScreen.hide();
     fetch('https://jsonplaceholder.typicode.com/todos/1')
       .then(response => response.json())
       .then(json => console.log(json));
