@@ -8,20 +8,43 @@
 import React, {useEffect} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
   Text,
-  useColorScheme,
   Button,
   View,
+  FlatList,
+  SectionList,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import MaskedView from '@react-native-masked-view/masked-view';
-import Pill from './assets/svg/pill.svg';
-import Svg from 'react-native-svg';
 import SplashScreen from 'react-native-splash-screen';
-
+import FlashMessage from 'react-native-flash-message';
+import {showMessage} from 'react-native-flash-message';
+import ListItem from './Components/ListItem';
+import Svg from 'react-native-svg';
+import Pill from './assets/svg/pill.svg';
+const data = [
+  {text: 'some text 1', key: 0},
+  {text: 'some text 2', key: 1},
+  {text: 'some text 3', key: 2},
+  {text: 'some text 4', key: 3},
+];
+const sectionData = [
+  {
+    title: 'Tasty food',
+    data: ['Pizza', 'Burger', 'Potato'],
+    key: 1,
+  },
+  {
+    title: 'Japanese',
+    data: ['Rolls', 'Salmon'],
+    key: 2,
+  },
+  {
+    title: 'Drinks',
+    data: ['Water', 'Pepsi', 'Fanta'],
+    key: 3,
+  },
+];
 function App(): React.JSX.Element {
   useEffect(() => {
     SplashScreen.hide();
@@ -47,6 +70,40 @@ function App(): React.JSX.Element {
             <View style={{width: 60, height: 60}}></View>
           </LinearGradient>
         </MaskedView>
+        <FlashMessage animationDuration={500} position="top" />
+        <Button
+          title="Show flash message"
+          onPress={() => {
+            showMessage({
+              type: 'info',
+              message: 'Flash message',
+              backgroundColor: 'white',
+              color: '#000',
+              icon: () => (
+                <View style={{marginRight: 5}}>
+                  <Svg width={15} height={15}>
+                    <Pill width={15} height={15} />
+                  </Svg>
+                </View>
+              ),
+            });
+          }}
+        />
+        <FlatList
+          data={data}
+          numColumns={2}
+          renderItem={({item}) => <ListItem text={item.text} />}
+        />
+        <SectionList
+          sections={sectionData}
+          renderSectionHeader={({section: {title}}) => <Text>{title}</Text>}
+          renderItem={({item}) => (
+            <View
+              style={{marginLeft: 5, backgroundColor: '#000', color: '#fff'}}>
+              <Text style={{color: '#fff'}}>{item}</Text>
+            </View>
+          )}
+        />
       </SafeAreaView>
     </LinearGradient>
   );
