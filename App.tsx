@@ -22,8 +22,17 @@ import FlashMessage, {showMessage} from 'react-native-flash-message';
 import Config from 'react-native-config';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import ListItem from './Components/ListItem';
-import Svg from 'react-native-svg';
+import Svg, {Circle} from 'react-native-svg';
 import Pill from './assets/svg/pill.svg';
+import Animated, {
+  useSharedValue,
+  withTiming,
+  useAnimatedProps,
+  withSequence,
+  withRepeat,
+  Easing,
+  ReduceMotion,
+} from 'react-native-reanimated';
 const sectionData = [
   {
     title: 'Tasty food',
@@ -43,19 +52,36 @@ const sectionData = [
 ];
 function App(): React.JSX.Element {
   const [storageData, setStorageData] = React.useState([]);
-  console.log('storage', storageData);
-
   const [inputValue, setInputValue] = React.useState('');
-
+  const circleValues = useSharedValue({cx: 200, cy: 100});
+  console.log('vdfvdfv', circleValues.value);
+  const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+  const handleAnimate = () => {
+    console.log('work');
+    circleValues.value = withSequence(
+      withTiming(
+        {
+          cx: 270,
+          cy: 100,
+        },
+        {duration: 870, easing: Easing.exp, reduceMotion: ReduceMotion.System},
+      ),
+      withRepeat(withTiming({cx: 250, cy: 125}, {duration: 500}), 5, true),
+    );
+    // circleValues.value.cx = 150;
+  };
+  const animatedProps = useAnimatedProps(() => {
+    return {
+      cx: circleValues.value.cx,
+      cy: circleValues.value.cy,
+    };
+  });
   useEffect(() => {
     SplashScreen.hide();
     EncryptedStorage.getItem(Config.FAKE_DATA).then((res: any) => {
       const result = JSON.parse(res);
       setStorageData(result);
     });
-    // fetch('https://jsonplaceholder.typicode.com/todos/1')
-    //   .then(response => response.json())
-    //   .then(json => console.log(json));
   }, []);
   return (
     <LinearGradient
@@ -129,6 +155,17 @@ function App(): React.JSX.Element {
             } catch (err) {}
           }}
         />
+        <Svg width={400} height={200}>
+          <AnimatedCircle
+            cx={circleValues.value.cx}
+            cy={circleValues.value.cy}
+            r={10}
+            fill="white"
+            stroke="#000"
+            animatedProps={animatedProps}
+          />
+        </Svg>
+        <Button title="Animate size" onPress={handleAnimate} />
         <FlatList
           data={storageData}
           numColumns={2}
