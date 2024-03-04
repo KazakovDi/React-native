@@ -24,6 +24,8 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import ListItem from './Components/ListItem';
 import Svg, {Circle} from 'react-native-svg';
 import Pill from './assets/svg/pill.svg';
+import RBSheet from '@poki_san/react-native-bottom-sheet';
+
 import Animated, {
   useSharedValue,
   withTiming,
@@ -54,10 +56,9 @@ function App(): React.JSX.Element {
   const [storageData, setStorageData] = React.useState([]);
   const [inputValue, setInputValue] = React.useState('');
   const circleValues = useSharedValue({cx: 200, cy: 100});
-  console.log('vdfvdfv', circleValues.value);
+  const bottomSheetRef = useRef();
   const AnimatedCircle = Animated.createAnimatedComponent(Circle);
   const handleAnimate = () => {
-    console.log('work');
     circleValues.value = withSequence(
       withTiming(
         {
@@ -181,6 +182,25 @@ function App(): React.JSX.Element {
               <Text style={{color: '#fff'}}>{item}</Text>
             </View>
           )}
+        />
+        <RBSheet
+          animationType="slide"
+          openDuration={500}
+          closeOnDragDown={true}
+          dragFromTopOnly={true}
+          customStyles={{
+            draggableIcon: {
+              backgroundColor: 'red',
+            },
+          }}
+          ref={bottomSheetRef}>
+          <View>
+            <Text>Some important text</Text>
+          </View>
+        </RBSheet>
+        <Button
+          title="Show bottom sheet"
+          onPress={() => bottomSheetRef.current.open()}
         />
       </SafeAreaView>
     </LinearGradient>
