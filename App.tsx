@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -13,21 +13,17 @@ import {
   View,
   FlatList,
   SectionList,
+  TextInput,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import MaskedView from '@react-native-masked-view/masked-view';
 import SplashScreen from 'react-native-splash-screen';
-import FlashMessage from 'react-native-flash-message';
-import {showMessage} from 'react-native-flash-message';
+import FlashMessage, {showMessage} from 'react-native-flash-message';
+import Config from 'react-native-config';
+import EncryptedStorage from 'react-native-encrypted-storage';
 import ListItem from './Components/ListItem';
 import Svg from 'react-native-svg';
 import Pill from './assets/svg/pill.svg';
-const data = [
-  {text: 'some text 1', key: 0},
-  {text: 'some text 2', key: 1},
-  {text: 'some text 3', key: 2},
-  {text: 'some text 4', key: 3},
-];
 const sectionData = [
   {
     title: 'Tasty food',
@@ -46,11 +42,20 @@ const sectionData = [
   },
 ];
 function App(): React.JSX.Element {
+  const [storageData, setStorageData] = React.useState([]);
+  console.log('storage', storageData);
+
+  const [inputValue, setInputValue] = React.useState('');
+
   useEffect(() => {
     SplashScreen.hide();
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
-      .then(response => response.json())
-      .then(json => console.log(json));
+    EncryptedStorage.getItem(Config.FAKE_DATA).then((res: any) => {
+      const result = JSON.parse(res);
+      setStorageData(result);
+    });
+    // fetch('https://jsonplaceholder.typicode.com/todos/1')
+    //   .then(response => response.json())
+    //   .then(json => console.log(json));
   }, []);
   return (
     <LinearGradient
@@ -89,9 +94,45 @@ function App(): React.JSX.Element {
             });
           }}
         />
+        <TextInput
+          style={{borderWidth: 1, borderColor: '#000'}}
+          onChangeText={text => setInputValue(text)}
+          value={inputValue}
+        />
+        <Button
+          title={'Save to encrypted storage'}
+          onPress={async () => {
+            const data = [
+              ...storageData,
+              {
+                id: Math.random(),
+                text: inputValue,
+              },
+            ];
+            try {
+              await EncryptedStorage.setItem(
+                Config.FAKE_DATA,
+                JSON.stringify(data),
+              );
+              showMessage({
+                type: 'success',
+                message: 'Data saved',
+              });
+            } catch (err) {}
+          }}
+        />
+        <Button
+          title={'Clear encrypted storage'}
+          onPress={async () => {
+            try {
+              await EncryptedStorage.clear();
+            } catch (err) {}
+          }}
+        />
         <FlatList
-          data={data}
+          data={storageData}
           numColumns={2}
+          keyExtractor={item => item.id}
           renderItem={({item}) => <ListItem text={item.text} />}
         />
         <SectionList
