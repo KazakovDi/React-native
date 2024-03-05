@@ -24,6 +24,8 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import ListItem from './Components/ListItem';
 import Svg, {Circle} from 'react-native-svg';
 import Pill from './assets/svg/pill.svg';
+import {observer} from 'mobx-react-lite';
+import MobXStore from './Stores/MobxStore';
 import RBSheet from '@poki_san/react-native-bottom-sheet';
 
 import Animated, {
@@ -52,8 +54,7 @@ const sectionData = [
     key: 3,
   },
 ];
-function App(): React.JSX.Element {
-  const [storageData, setStorageData] = React.useState([]);
+const App = observer((): React.JSX.Element => {
   const [inputValue, setInputValue] = React.useState('');
   const circleValues = useSharedValue({cx: 200, cy: 100});
   const bottomSheetRef = useRef();
@@ -77,12 +78,10 @@ function App(): React.JSX.Element {
       cy: circleValues.value.cy,
     };
   });
+  console.log('store', MobXStore.store);
   useEffect(() => {
     SplashScreen.hide();
-    EncryptedStorage.getItem(Config.FAKE_DATA).then((res: any) => {
-      const result = JSON.parse(res);
-      setStorageData(result);
-    });
+    MobXStore.GetData();
   }, []);
   return (
     <LinearGradient
@@ -128,32 +127,17 @@ function App(): React.JSX.Element {
         />
         <Button
           title={'Save to encrypted storage'}
-          onPress={async () => {
-            const data = [
-              ...storageData,
-              {
-                id: Math.random(),
-                text: inputValue,
-              },
-            ];
-            try {
-              await EncryptedStorage.setItem(
-                Config.FAKE_DATA,
-                JSON.stringify(data),
-              );
-              showMessage({
-                type: 'success',
-                message: 'Data saved',
-              });
-            } catch (err) {}
+          onPress={() => {
+            MobXStore.saveToStorage('FAKE_DATA', {
+              id: Math.random(),
+              text: inputValue,
+            });
           }}
         />
         <Button
           title={'Clear encrypted storage'}
           onPress={async () => {
-            try {
-              await EncryptedStorage.clear();
-            } catch (err) {}
+            MobXStore.clearStorage();
           }}
         />
         <Svg width={400} height={200}>
@@ -168,7 +152,7 @@ function App(): React.JSX.Element {
         </Svg>
         <Button title="Animate size" onPress={handleAnimate} />
         <FlatList
-          data={storageData}
+          data={MobXStore.store['FAKE_DATA']}
           numColumns={2}
           keyExtractor={item => item.id}
           renderItem={({item}) => <ListItem text={item.text} />}
@@ -205,6 +189,6 @@ function App(): React.JSX.Element {
       </SafeAreaView>
     </LinearGradient>
   );
-}
+});
 
 export default App;
