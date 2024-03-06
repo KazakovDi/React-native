@@ -19,15 +19,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import MaskedView from '@react-native-masked-view/masked-view';
 import SplashScreen from 'react-native-splash-screen';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
-import Config from 'react-native-config';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import ListItem from './Components/ListItem';
 import Svg, {Circle} from 'react-native-svg';
 import Pill from './assets/svg/pill.svg';
 import {observer} from 'mobx-react-lite';
 import MobXStore from './Stores/MobxStore';
 import RBSheet from '@poki_san/react-native-bottom-sheet';
-
+import Device from './Components/Device';
 import Animated, {
   useSharedValue,
   withTiming,
@@ -150,7 +148,8 @@ const App = observer((): React.JSX.Element => {
             animatedProps={animatedProps}
           />
         </Svg>
-        <Button title="Animate size" onPress={handleAnimate} />
+        <Button title="Animate" onPress={handleAnimate} />
+        <Device />
         <FlatList
           data={MobXStore.store['FAKE_DATA']}
           numColumns={2}
