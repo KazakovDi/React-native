@@ -6,11 +6,10 @@ const ListItem = ({text}: {text: 'string'}) => {
     <View
       style={{
         backgroundColor: '#fff',
-        color: '#000',
         marginLeft: 5,
         marginBottom: 5,
       }}>
-      <Text>{text}</Text>
+      <Text style={{color: '#000'}}>{text}</Text>
     </View>
   );
 };

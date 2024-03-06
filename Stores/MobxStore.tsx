@@ -5,6 +5,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 
 class MobXStore {
   store = {};
+  media = {};
   constructor() {
     makeAutoObservable(this, {}, {});
   }
@@ -30,6 +31,12 @@ class MobXStore {
       }
     });
     return Promise.resolve(this.store);
+  }
+  savePhoto(uri: string) {
+    this.media = {uri, type: 'img'};
+  }
+  saveVideo(uri: string) {
+    this.media = {uri, type: 'vid'};
   }
 }
 

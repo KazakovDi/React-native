@@ -13,6 +13,7 @@ import {
   View,
   FlatList,
   SectionList,
+  Image,
   TextInput,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -24,7 +25,6 @@ import Svg, {Circle} from 'react-native-svg';
 import Pill from './assets/svg/pill.svg';
 import {observer} from 'mobx-react-lite';
 import MobXStore from './Stores/MobxStore';
-import RBSheet from '@poki_san/react-native-bottom-sheet';
 import Device from './Components/Device';
 import Animated, {
   useSharedValue,
@@ -35,6 +35,8 @@ import Animated, {
   Easing,
   ReduceMotion,
 } from 'react-native-reanimated';
+import NetInfo from '@react-native-community/netinfo';
+import Camera from './Components/Camera';
 const sectionData = [
   {
     title: 'Tasty food',
@@ -55,7 +57,6 @@ const sectionData = [
 const App = observer((): React.JSX.Element => {
   const [inputValue, setInputValue] = React.useState('');
   const circleValues = useSharedValue({cx: 200, cy: 100});
-  const bottomSheetRef = useRef();
   const AnimatedCircle = Animated.createAnimatedComponent(Circle);
   const handleAnimate = () => {
     circleValues.value = withSequence(
@@ -76,7 +77,7 @@ const App = observer((): React.JSX.Element => {
       cy: circleValues.value.cy,
     };
   });
-  console.log('store', MobXStore.store);
+  console.log('store', MobXStore.media);
   useEffect(() => {
     SplashScreen.hide();
     MobXStore.GetData();
@@ -89,7 +90,7 @@ const App = observer((): React.JSX.Element => {
         'rgba(165,143,215, 1)',
       ]}>
       <SafeAreaView style={{height: '100%'}}>
-        <MaskedView
+        {/* <MaskedView
           maskElement={
             <Text style={{fontFamily: 'Roboto-Regular', fontSize: 48}}>
               Gradient
@@ -98,9 +99,9 @@ const App = observer((): React.JSX.Element => {
           <LinearGradient colors={['rgb(255,86,78)', 'rgb(250,209,38)']}>
             <View style={{width: 60, height: 60}}></View>
           </LinearGradient>
-        </MaskedView>
+        </MaskedView> */}
         <FlashMessage animationDuration={500} position="top" />
-        <Button
+        {/* <Button
           title="Show flash message"
           onPress={() => {
             showMessage({
@@ -137,8 +138,8 @@ const App = observer((): React.JSX.Element => {
           onPress={async () => {
             MobXStore.clearStorage();
           }}
-        />
-        <Svg width={400} height={200}>
+        /> */}
+        {/* <Svg width={400} height={200}>
           <AnimatedCircle
             cx={circleValues.value.cx}
             cy={circleValues.value.cy}
@@ -147,10 +148,10 @@ const App = observer((): React.JSX.Element => {
             stroke="#000"
             animatedProps={animatedProps}
           />
-        </Svg>
-        <Button title="Animate" onPress={handleAnimate} />
-        <Device />
-        <FlatList
+        </Svg> */}
+        {/* <Button title="Animate" onPress={handleAnimate} /> */}
+        {/* <Device /> */}
+        {/* <FlatList
           data={MobXStore.store['FAKE_DATA']}
           numColumns={2}
           keyExtractor={item => item.id}
@@ -165,26 +166,15 @@ const App = observer((): React.JSX.Element => {
               <Text style={{color: '#fff'}}>{item}</Text>
             </View>
           )}
-        />
-        <RBSheet
-          animationType="slide"
-          openDuration={500}
-          closeOnDragDown={true}
-          dragFromTopOnly={true}
-          customStyles={{
-            draggableIcon: {
-              backgroundColor: 'red',
-            },
-          }}
-          ref={bottomSheetRef}>
-          <View>
-            <Text>Some important text</Text>
-          </View>
-        </RBSheet>
-        <Button
-          title="Show bottom sheet"
-          onPress={() => bottomSheetRef.current.open()}
-        />
+        /> */}
+        {MobXStore.media.type === 'img' ? (
+          <Image
+            source={{uri: MobXStore.media.uri}}
+            style={{width: '100%', height: 150}}></Image>
+        ) : MobXStore.media.type === 'vid' ? (
+          <Text>{MobXStore.media.uri}</Text>
+        ) : null}
+        <Camera />
       </SafeAreaView>
     </LinearGradient>
   );
