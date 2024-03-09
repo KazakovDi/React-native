@@ -1,14 +1,18 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import {useContext} from 'react';
+import {ThemeContext} from '../App';
 const Device = () => {
   const brand = DeviceInfo.getBrand();
   const device = DeviceInfo.getModel();
-  console.log('Device', device);
+  const styles = useContext(ThemeContext);
   return (
     <View>
-      <Text style={{fontWeight: 700, fontSize: 26}}>Device info:</Text>
-      <Text> {brand + ' ' + device}</Text>
+      <Text style={{color: styles.text.color, fontWeight: 700, fontSize: 26}}>
+        Device info:
+      </Text>
+      <Text style={{color: styles.text.color}}> {brand + ' ' + device}</Text>
     </View>
   );
 };

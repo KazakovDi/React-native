@@ -1,15 +1,17 @@
-import React, {useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import {View, Button, Text, Image, TouchableOpacity} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import RBSheet from '@poki_san/react-native-bottom-sheet';
 import MobxStore from '../Stores/MobxStore';
 import {observer} from 'mobx-react-lite';
-
+import EStyleSheet from 'react-native-extended-stylesheet';
+import {ThemeContext} from '../App';
+import MyButton from './MyButton';
 const Camera = observer(() => {
   const cameraRef = useRef(null);
   const bottomSheetRef = useRef();
-
+  const styles = useContext(ThemeContext);
   const takePicture = async () => {
     const dat = await cameraRef.current.takePictureAsync();
     MobxStore.savePhoto(dat.uri);
@@ -30,11 +32,19 @@ const Camera = observer(() => {
         dragFromTopOnly={true}
         customStyles={{
           draggableIcon: {
-            backgroundColor: 'red',
+            backgroundColor: styles.bgSecondary.color,
+          },
+          container: {
+            backgroundColor: styles.text.opposite,
           },
         }}
         ref={bottomSheetRef}>
-        <View style={{height: 450, overflow: 'hidden', position: 'relative'}}>
+        <View
+          style={{
+            height: 450,
+            overflow: 'hidden',
+            position: 'relative',
+          }}>
           <RNCamera style={{height: 350}} ref={cameraRef}></RNCamera>
           <TouchableOpacity
             title={'Take photo'}
@@ -45,7 +55,7 @@ const Camera = observer(() => {
                 });
               });
             }}>
-            <Text style={{fontSize: 22}}>Photo</Text>
+            <Text style={{color: styles.text.color, fontSize: 22}}>Photo</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onLongPress={() => {
@@ -58,12 +68,14 @@ const Camera = observer(() => {
               cameraRef.current.stopRecording();
               bottomSheetRef.current.close();
             }}>
-            <Text style={{fontSize: 22}}>Vid</Text>
+            <Text style={{color: styles.text.color, fontSize: 22}}>Vid</Text>
           </TouchableOpacity>
         </View>
       </RBSheet>
-      <Button
+      <MyButton
         title="Show bottom sheet"
+        color={styles.text.opposite}
+        bgColor={styles.bgSecondary.color}
         onPress={() => bottomSheetRef.current.open()}
       />
     </>
