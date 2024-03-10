@@ -40,6 +40,7 @@ class MobXStore {
       },
     },
   };
+  date = new Date();
   constructor() {
     makeAutoObservable(this, {}, {});
   }
@@ -79,6 +80,9 @@ class MobXStore {
       this.themeProps.theme = 'light';
       this.themeProps.styles = lightTheme;
     }
+  }
+  public setDate(date: Date) {
+    this.date = date;
   }
 }
 

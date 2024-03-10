@@ -25,10 +25,10 @@ import EncryptedStorageHandler from './Components/EncryptedStorageHandler';
 import MyLists from './Components/MyLists';
 import ContactsList from './Components/ContactsList';
 import Clip from './Components/Clip';
+import Calendar from './Components/Calendar';
 export const ThemeContext = createContext({});
 const App = observer((): React.JSX.Element => {
   EStyleSheet.build(MobXStore.themeProps.styles);
-  const clipRef = useRef();
   const styles = EStyleSheet.create(MobXStore.themeProps.mask);
 
   useEffect(() => {
@@ -39,12 +39,19 @@ const App = observer((): React.JSX.Element => {
     <LinearGradient colors={MobXStore.themeProps.styles.$bgGradient}>
       <SafeAreaView style={{height: '100%'}}>
         <ThemeContext.Provider value={styles}>
+          <Text style={{color: styles.text.color}}>
+            {new Intl.DateTimeFormat('ru-RU', {
+              dateStyle: 'full',
+              timeStyle: 'medium',
+            }).format(MobXStore.date)}
+          </Text>
           <Clip value={'124'} />
           <GradientText />
           <FlashMsg />
           {/* <EncryptedStorageHandler /> */}
           {/* <Device /> */}
           {/* <ContactsList /> */}
+          <Calendar />
           <MyButton
             title={'Change theme'}
             onPress={() => MobXStore.switchTheme()}
@@ -60,7 +67,7 @@ const App = observer((): React.JSX.Element => {
               />
               <MyButton
                 color={styles.text.opposite}
-                bgColor={styles.bgPrimary.color}
+                bgColor={styles.bgSecondary.color}
                 title={'Share'}
                 onPress={() => {
                   Share.open({
@@ -76,7 +83,7 @@ const App = observer((): React.JSX.Element => {
               <Text style={styles.text.color}>{MobXStore.media.uri}</Text>
               <MyButton
                 color={styles.text.opposite}
-                bgColor={styles.bgPrimary.color}
+                bgColor={styles.bgSecondary.color}
                 title={'Share'}
                 onPress={() => {
                   Share.open({
