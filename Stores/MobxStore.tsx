@@ -45,7 +45,6 @@ class MobXStore {
   }
 
   public saveToStorage(key, value) {
-    // console.log('save', value, this.store[0]);
     if (!this.store[key]) this.store[key] = [];
     const stringifyedValue = JSON.stringify([...this.store[key], value]);
     EncryptedStorage.setItem(key, stringifyedValue).then(res => {

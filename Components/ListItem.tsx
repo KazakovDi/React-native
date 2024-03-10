@@ -6,7 +6,6 @@ import MobxStore from '../Stores/MobxStore';
 import {useContext} from 'react';
 import {ThemeContext} from '../App';
 const ListItem = observer(({text}: {text: 'string'}) => {
-  console.log(MobxStore);
   const styles = useContext(ThemeContext);
   return (
     <View

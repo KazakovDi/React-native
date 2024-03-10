@@ -23,9 +23,9 @@ import MyButton from './Components/MyButton';
 import {createContext} from 'react';
 import EncryptedStorageHandler from './Components/EncryptedStorageHandler';
 import MyLists from './Components/MyLists';
+import ContactsList from './Components/ContactsList';
 export const ThemeContext = createContext({});
 const App = observer((): React.JSX.Element => {
-  console.log('Mobx', MobxStore.theme);
   EStyleSheet.build(MobXStore.themeProps.styles);
 
   // component: use global variables
@@ -43,6 +43,7 @@ const App = observer((): React.JSX.Element => {
           <FlashMsg />
           <EncryptedStorageHandler />
           <Device />
+          <ContactsList />
           <MyButton
             title={'Change theme'}
             onPress={() => MobXStore.switchTheme()}
