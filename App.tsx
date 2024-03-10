@@ -24,11 +24,11 @@ import {createContext} from 'react';
 import EncryptedStorageHandler from './Components/EncryptedStorageHandler';
 import MyLists from './Components/MyLists';
 import ContactsList from './Components/ContactsList';
+import Clip from './Components/Clip';
 export const ThemeContext = createContext({});
 const App = observer((): React.JSX.Element => {
   EStyleSheet.build(MobXStore.themeProps.styles);
-
-  // component: use global variables
+  const clipRef = useRef();
   const styles = EStyleSheet.create(MobXStore.themeProps.mask);
 
   useEffect(() => {
@@ -39,6 +39,7 @@ const App = observer((): React.JSX.Element => {
     <LinearGradient colors={MobXStore.themeProps.styles.$bgGradient}>
       <SafeAreaView style={{height: '100%'}}>
         <ThemeContext.Provider value={styles}>
+          <Clip value={'124'} />
           <GradientText />
           <FlashMsg />
           <EncryptedStorageHandler />
