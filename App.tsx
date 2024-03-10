@@ -12,7 +12,7 @@ import SplashScreen from 'react-native-splash-screen';
 import {observer} from 'mobx-react-lite';
 import MobXStore from './Stores/MobxStore';
 import Device from './Components/Device';
-
+import Share from 'react-native-share';
 import NetInfo from '@react-native-community/netinfo';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import FlashMsg from './Components/FlashMsg';
@@ -42,9 +42,9 @@ const App = observer((): React.JSX.Element => {
           <Clip value={'124'} />
           <GradientText />
           <FlashMsg />
-          <EncryptedStorageHandler />
-          <Device />
-          <ContactsList />
+          {/* <EncryptedStorageHandler /> */}
+          {/* <Device /> */}
+          {/* <ContactsList /> */}
           <MyButton
             title={'Change theme'}
             onPress={() => MobXStore.switchTheme()}
@@ -53,11 +53,40 @@ const App = observer((): React.JSX.Element => {
           />
           <MyLists />
           {MobXStore.media.type === 'img' ? (
-            <Image
-              source={{uri: MobXStore.media.uri}}
-              style={{width: '100%', height: 350}}></Image>
+            <>
+              <Image
+                source={{uri: MobXStore.media.uri}}
+                style={{width: '100%', height: 350}}
+              />
+              <MyButton
+                color={styles.text.opposite}
+                bgColor={styles.bgPrimary.color}
+                title={'Share'}
+                onPress={() => {
+                  Share.open({
+                    title: 'My media ',
+                    message: 'Check this out:',
+                    url: MobXStore.media.uri,
+                  });
+                }}
+              />
+            </>
           ) : MobXStore.media.type === 'vid' ? (
-            <Text style={styles.text.color}>{MobXStore.media.uri}</Text>
+            <>
+              <Text style={styles.text.color}>{MobXStore.media.uri}</Text>
+              <MyButton
+                color={styles.text.opposite}
+                bgColor={styles.bgPrimary.color}
+                title={'Share'}
+                onPress={() => {
+                  Share.open({
+                    title: 'My media ',
+                    message: 'Check this out:',
+                    url: MobXStore.media.uri,
+                  });
+                }}
+              />
+            </>
           ) : null}
           <Camera />
         </ThemeContext.Provider>
