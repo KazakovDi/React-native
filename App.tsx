@@ -34,6 +34,7 @@ import {
   walkthroughable,
   useCopilot,
 } from 'react-native-copilot';
+import Geoloc from './Components/Geoloc';
 export const ThemeContext = createContext({});
 
 const App = observer((): React.JSX.Element => {
@@ -65,6 +66,7 @@ const App = observer((): React.JSX.Element => {
             color={styles.text.opposite}
             bgColor={styles.bgSecondary.color}
           /> */}
+
           <Clip value={'124'} />
           <GradientText />
           {/* <FlashMsg /> */}
@@ -88,6 +90,7 @@ const App = observer((): React.JSX.Element => {
             color={styles.text.opposite}
             bgColor={styles.bgSecondary.color}
           />
+          <Geoloc />
           <MyLists />
           {MobXStore.media.type === 'img' ? (
             <>

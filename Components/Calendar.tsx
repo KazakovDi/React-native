@@ -16,6 +16,7 @@ export default () => {
         onPress={() => setOpen(true)}
       />
       <DatePicker
+        theme={MobxStore.themeProps.theme}
         modal
         open={open}
         date={MobxStore.date}
