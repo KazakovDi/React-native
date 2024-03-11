@@ -26,11 +26,25 @@ import MyLists from './Components/MyLists';
 import ContactsList from './Components/ContactsList';
 import Clip from './Components/Clip';
 import Calendar from './Components/Calendar';
+import Guide from './Components/Guide';
+import TooltipComponent from './Components/TooltipComponent';
+import {
+  CopilotProvider,
+  CopilotStep,
+  walkthroughable,
+  useCopilot,
+} from 'react-native-copilot';
 export const ThemeContext = createContext({});
+
 const App = observer((): React.JSX.Element => {
   EStyleSheet.build(MobXStore.themeProps.styles);
-  const styles = EStyleSheet.create(MobXStore.themeProps.mask);
-
+  const styles = EStyleSheet.create({
+    ...MobXStore.themeProps.mask,
+    tooltip: {
+      backgroundColor: 'rgb(0,18,32)',
+      color: '#fff',
+    },
+  });
   useEffect(() => {
     SplashScreen.hide();
     MobXStore.GetData();
@@ -45,9 +59,25 @@ const App = observer((): React.JSX.Element => {
               timeStyle: 'medium',
             }).format(MobXStore.date)}
           </Text>
+          {/* <MyButton
+            title={'Guide'}
+            onPress={() => start()}
+            color={styles.text.opposite}
+            bgColor={styles.bgSecondary.color}
+          /> */}
           <Clip value={'124'} />
           <GradientText />
-          <FlashMsg />
+          {/* <FlashMsg /> */}
+          <CopilotProvider
+            arrowColor={'red'}
+            overlay="svg"
+            backdropColor="rgba(0,18,32,0.8)"
+            verticalOffset={26}
+            tooltipStyle={styles.tooltip}
+            tooltipComponent={TooltipComponent}>
+            <Guide />
+          </CopilotProvider>
+
           {/* <EncryptedStorageHandler /> */}
           {/* <Device /> */}
           {/* <ContactsList /> */}

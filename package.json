@@ -27,6 +27,7 @@
     "react-native-camera": "^4.2.1",
     "react-native-config": "^1.5.1",
     "react-native-contacts": "^7.0.8",
+    "react-native-copilot": "^3.3.0",
     "react-native-date-picker": "^4.4.0",
     "react-native-device-info": "^10.13.1",
     "react-native-encrypted-storage": "^4.0.3",
