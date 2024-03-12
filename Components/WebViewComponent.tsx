@@ -4,6 +4,10 @@ const WebViewComponent = () => {
   return (
     <WebView
       style={{height: 100}}
+      scrollEnabled={true}
+      setDisplayZoomControls={true}
+      showsHorizontalScrollIndicator={true}
+      contentMode="mobile"
       source={{uri: 'https://github.com/'}}></WebView>
   );
 };
