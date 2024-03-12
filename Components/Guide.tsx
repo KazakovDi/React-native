@@ -9,23 +9,32 @@ import {Text, View} from 'react-native';
 import {useContext} from 'react';
 import {ThemeContext} from '../App';
 import MyButton from './MyButton';
+import {useSelector} from 'react-redux';
 const Guide = () => {
   const CopilotText = walkthroughable(Text);
   const CopilotBlock = walkthroughable(View);
   const {start} = useCopilot();
   const styles = useContext(ThemeContext);
+  const redState = useSelector(state => state.localization);
+  console.log('red', redState);
   return (
     <View>
       <CopilotStep
-        text="First step gfdddddddddddgdfgdfgdfgdfgdfgdfgdfgdfgdfgdfgdfdfgdfgdfdfgdfgerergejyuiurtykthdgdf"
+        text={redState.localization.firstGuideStep}
         order={1}
         name="hello">
         <CopilotText>Text1</CopilotText>
       </CopilotStep>
-      <CopilotStep text="Second step" order={2} name="description">
+      <CopilotStep
+        text={redState.localization.secondGuideStep}
+        order={2}
+        name="description">
         <CopilotText>Text2</CopilotText>
       </CopilotStep>
-      <CopilotStep text="Third step" order={3} name="end">
+      <CopilotStep
+        text={redState.localization.thirdGuideStep}
+        order={3}
+        name="end">
         <CopilotBlock
           style={{
             backgroundColor: '#fff',

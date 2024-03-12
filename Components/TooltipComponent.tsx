@@ -4,10 +4,16 @@ import {useContext} from 'react';
 import {ThemeContext} from '../App';
 import MyButton from './MyButton';
 import {useCopilot} from 'react-native-copilot';
+import {useSelector} from 'react-redux';
+
 const TooltipComponent = props => {
-  const styles = useContext(ThemeContext);
+  const state = useSelector(state => state.localization.localization);
   const {goToNext, goToPrev, stop, currentStep, isFirstStep, isLastStep} =
     useCopilot();
+
+  console.log('state', state);
+  console.log('isFirstStep', isFirstStep);
+
   return (
     <View style={{minWidth: 150}}>
       <Text style={{fontSize: 20, color: '#fff'}}>{currentStep?.text}</Text>
@@ -20,14 +26,14 @@ const TooltipComponent = props => {
                 color: 'rgb(64,159,215)',
                 display: 'inline',
               }}>
-              Prev
+              {state.prev}
             </Text>
           </TouchableOpacity>
         ) : null}
         <TouchableOpacity style={{padding: 7}} onPress={stop}>
           <Text
             style={{fontSize: 20, color: 'rgb(64,159,215)', display: 'inline'}}>
-            {isLastStep ? 'End' : 'Skip'}
+            {state.skip}
           </Text>
         </TouchableOpacity>
 
@@ -39,7 +45,7 @@ const TooltipComponent = props => {
                 color: 'rgb(64,159,215)',
                 display: 'inline',
               }}>
-              Next
+              {state.next}
             </Text>
           </TouchableOpacity>
         ) : null}

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {makeAutoObservable, runInAction} from 'mobx';
 import EncryptedStorage from 'react-native-encrypted-storage';
+
 const darkTheme = {
   $textColor: '#fff',
   $oppositeColor: '#000',
