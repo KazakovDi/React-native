@@ -35,6 +35,7 @@ import {
   useCopilot,
 } from 'react-native-copilot';
 import Geoloc from './Components/Geoloc';
+import WebViewComponent from './Components/WebViewComponent';
 export const ThemeContext = createContext({});
 
 const App = observer((): React.JSX.Element => {
@@ -90,6 +91,7 @@ const App = observer((): React.JSX.Element => {
             color={styles.text.opposite}
             bgColor={styles.bgSecondary.color}
           />
+          <WebViewComponent />
           <Geoloc />
           <MyLists />
           {MobXStore.media.type === 'img' ? (
