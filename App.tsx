@@ -35,6 +35,7 @@ import RenderHTML from './Components/RenderHTML';
 import {Provider, useSelector, useDispatch} from 'react-redux';
 import LangSwitch from './Components/LangSwitch';
 import store from './Stores/ReduxStore';
+import Conection from './Components/Conection';
 export const ThemeContext = createContext({});
 
 const App = observer((): React.JSX.Element => {
@@ -81,6 +82,7 @@ const App = observer((): React.JSX.Element => {
               tooltipComponent={TooltipComponent}>
               <Guide />
             </CopilotProvider>
+            <Conection />
             <LangSwitch />
             {/* <EncryptedStorageHandler /> */}
             {/* <Device /> */}
