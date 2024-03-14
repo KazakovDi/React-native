@@ -1,7 +1,9 @@
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {reducer} from './reducer';
 import LocalizedStrings from 'react-native-localization';
+import createSagaMiddleware from 'redux-saga';
 
+const sagaMiddleware = createSagaMiddleware();
 let localizationStrings = new LocalizedStrings({
   en: {
     skip: 'Skip',
@@ -24,12 +26,19 @@ let localizationStrings = new LocalizedStrings({
     thirdGuideStep: 'Третий шаг',
   },
 });
+function* helloSaga() {
+  console.log('Hello Sagas!');
+}
 export const initialState = {
   localization: localizationStrings,
 };
 const reducers = combineReducers({
   localization: reducer,
 });
-const store = createStore(reducers, initialState);
-
+const store = createStore(
+  reducers,
+  initialState,
+  applyMiddleware(sagaMiddleware),
+);
+sagaMiddleware.run(helloSaga);
 export default store;

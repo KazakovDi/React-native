@@ -16,7 +16,6 @@ const Guide = () => {
   const {start} = useCopilot();
   const styles = useContext(ThemeContext);
   const redState = useSelector(state => state.localization);
-  console.log('red', redState);
   return (
     <View>
       <CopilotStep

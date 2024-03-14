@@ -36,6 +36,7 @@ import {Provider, useSelector, useDispatch} from 'react-redux';
 import LangSwitch from './Components/LangSwitch';
 import store from './Stores/ReduxStore';
 import Conection from './Components/Conection';
+import Biometrics from './Components/Biometrics';
 export const ThemeContext = createContext({});
 
 const App = observer((): React.JSX.Element => {
@@ -62,7 +63,7 @@ const App = observer((): React.JSX.Element => {
                 timeStyle: 'medium',
               }).format(MobXStore.date)}
             </Text>
-
+            <Biometrics />
             {/* <MyButton
             title={'Guide'}
             onPress={() => start()}

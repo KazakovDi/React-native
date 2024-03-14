@@ -7,6 +7,9 @@ export const reducer = (state = initialState, action) => {
       console.log('CHNG_LOC', state.localization);
 
       return {...state};
+    case 'LOGIN': {
+      state.loggedIn = {};
+    }
     default:
       return initialState;
   }
