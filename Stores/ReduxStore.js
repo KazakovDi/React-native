@@ -1,9 +1,9 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {reducer} from './reducer';
 import LocalizedStrings from 'react-native-localization';
-import createSagaMiddleware, {all} from 'redux-saga';
-import {rootWacher} from './rootWatcher';
-const sagaMiddleware = createSagaMiddleware();
+import {thunk} from 'redux-thunk';
+console.log('thunk', thunk);
+// const sagaMiddleware = createSagaMiddleware();
 let localizationStrings = new LocalizedStrings({
   en: {
     skip: 'Skip',
@@ -36,8 +36,9 @@ const reducers = combineReducers({
 });
 const store = createStore(
   reducers,
-  initialState,
-  applyMiddleware(sagaMiddleware),
+  // initialState,
+  // applyMiddleware(sagaMiddleware),
+  applyMiddleware(thunk),
 );
-sagaMiddleware.run(rootWacher);
+// sagaMiddleware.run(rootWacher);
 export default store;

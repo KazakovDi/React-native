@@ -2,16 +2,20 @@ import React, {useContext} from 'react';
 import {TouchableOpacity, Text} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {ThemeContext} from '../App';
+import {FetchUsers} from '../Stores/usersFetch';
 const Counter = () => {
   const dispatch = useDispatch();
   const counter = useSelector(state => state.localization.counter);
   const data = useSelector(state => state.localization.users);
   const styles = useContext(ThemeContext);
+  console.log('dat', data);
   return (
     <>
       <TouchableOpacity
         onPress={() => {
-          dispatch({type: 'ASYNC_INCREMENT'});
+          console.log('dispatch');
+
+          // dispatch({type: 'ASYNC_INCREMENT'});
         }}>
         <Text>increment</Text>
       </TouchableOpacity>
@@ -24,7 +28,8 @@ const Counter = () => {
       <Text style={{fontSize: 22, color: styles.text.color}}>{counter}</Text>
       <TouchableOpacity
         onPress={() => {
-          dispatch({type: 'FETCH_USERS'});
+          dispatch(FetchUsers());
+          // dispatch({type: 'FETCH_USERS'});
         }}>
         <Text style={{color: styles.text.color}}>GET USERS</Text>
       </TouchableOpacity>
