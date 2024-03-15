@@ -1,8 +1,8 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {reducer} from './reducer';
 import LocalizedStrings from 'react-native-localization';
-import createSagaMiddleware from 'redux-saga';
-
+import createSagaMiddleware, {all} from 'redux-saga';
+import {rootWacher} from './rootWatcher';
 const sagaMiddleware = createSagaMiddleware();
 let localizationStrings = new LocalizedStrings({
   en: {
@@ -26,11 +26,10 @@ let localizationStrings = new LocalizedStrings({
     thirdGuideStep: 'Третий шаг',
   },
 });
-function* helloSaga() {
-  console.log('Hello Sagas!');
-}
 export const initialState = {
   localization: localizationStrings,
+  counter: 0,
+  users: [],
 };
 const reducers = combineReducers({
   localization: reducer,
@@ -40,5 +39,5 @@ const store = createStore(
   initialState,
   applyMiddleware(sagaMiddleware),
 );
-sagaMiddleware.run(helloSaga);
+sagaMiddleware.run(rootWacher);
 export default store;
