@@ -31,16 +31,23 @@ import TooltipComponent from './Components/TooltipComponent';
 import {CopilotProvider} from 'react-native-copilot';
 import Geoloc from './Components/Geoloc';
 import WebViewComponent from './Components/WebViewComponent';
-import RenderHTML from './Components/RenderHTML';
 import {Provider, useSelector, useDispatch} from 'react-redux';
 import LangSwitch from './Components/LangSwitch';
 import store from './Stores/ReduxStore';
 import Conection from './Components/Conection';
 import Biometrics from './Components/Biometrics';
 import Counter from './Components/Counter';
+import Notif from './Components/Notif';
+import RenderHtml from 'react-native-render-html';
 export const ThemeContext = createContext({});
 
 const App = observer((): React.JSX.Element => {
+  const source = {
+    html: `
+  <a href={https://www.google.com} style='color:red;'>
+    Hello World!
+  </a>`,
+  };
   EStyleSheet.build(MobXStore.themeProps.styles);
   const styles = EStyleSheet.create({
     ...MobXStore.themeProps.mask,
@@ -65,13 +72,13 @@ const App = observer((): React.JSX.Element => {
               }).format(MobXStore.date)}
             </Text>
             <Biometrics />
+            <RenderHtml source={source} />
             {/* <MyButton
             title={'Guide'}
             onPress={() => start()}
             color={styles.text.opposite}
             bgColor={styles.bgSecondary.color}
           /> */}
-
             <Clip value={'124'} />
             <GradientText />
             {/* <FlashMsg /> */}
@@ -87,6 +94,7 @@ const App = observer((): React.JSX.Element => {
             <Conection />
             <LangSwitch />
             <Counter />
+            <Notif />
             {/* <EncryptedStorageHandler /> */}
             {/* <Device /> */}
             {/* <ContactsList /> */}
