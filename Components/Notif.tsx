@@ -27,7 +27,6 @@ const Notif = () => {
   Notifications.events().registerNotificationReceivedBackground(
     (notification: any, completion: (response: any) => void) => {
       console.log('Notification Received - Background', notification.payload);
-
       // Calling completion on iOS with `alert: true` will present the native iOS inApp notification.
       completion({alert: true, sound: true, badge: false});
     },
@@ -43,13 +42,17 @@ const Notif = () => {
   return (
     <TouchableOpacity
       onPress={() => {
-        Notifications.postLocalNotification({
-          body: 'Local notification!',
-          title: 'Local Notification Title',
-          sound: 'chime.aiff',
-          category: 'SOME_CATEGORY',
-          link: 'localNotificationLink',
-          fireDate: new Date(), // only iOS
+        fetch('https://fcm.googleapis.com/fcm/send', {
+          method: 'post',
+          body: JSON.stringify({
+            message: {
+              token: 'bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...',
+              notification: {
+                title: 'Portugal vs. Denmark',
+                body: 'great match!',
+              },
+            },
+          }),
         });
       }}>
       <Text>Notif</Text>

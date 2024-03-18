@@ -72,7 +72,7 @@ const App = observer((): React.JSX.Element => {
               }).format(MobXStore.date)}
             </Text>
             <Biometrics />
-            <RenderHtml source={source} />
+            {/* <RenderHtml source={source} /> */}
             {/* <MyButton
             title={'Guide'}
             onPress={() => start()}
