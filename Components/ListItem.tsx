@@ -1,8 +1,6 @@
 import React from 'react';
-import {SafeAreaView, Text, Button, View, FlatList} from 'react-native';
-import EStyleSheet from 'react-native-extended-stylesheet';
+import {Text, View} from 'react-native';
 import {observer} from 'mobx-react-lite';
-import MobxStore from '../Stores/MobxStore';
 import {useContext} from 'react';
 import {ThemeContext} from '../App';
 const ListItem = observer(({text}: {text: 'string'}) => {

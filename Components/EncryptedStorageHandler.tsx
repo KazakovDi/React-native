@@ -37,7 +37,7 @@ const EncryptedStorageHandler = observer(() => {
         color={styles.text.opposite}
         bgColor={styles.bgSecondary.color}
       />
-      {/* <MyLists /> */}
+      <MyLists />
     </>
   );
 });

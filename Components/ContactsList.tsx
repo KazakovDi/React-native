@@ -52,6 +52,7 @@ const ContactsList = () => {
         />
       </View>
       <FlatList
+        contentContainerStyle={{flexGrow: 1}}
         keyExtractor={item => item.rawContactId}
         data={contactList}
         renderItem={({item}) => (

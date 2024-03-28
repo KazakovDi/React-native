@@ -19,12 +19,12 @@ const LangSwitch = () => {
         title="en"
         onPress={() => dispatch({type: 'CHNG_LOC', payload: 'en'})}
       />
-      <MyButton
+      {/* <MyButton
         color="#fff"
         bgColor="red"
         title="en"
         onPress={() => dispatch({type: 'ASYNC_FETCH'})}
-      />
+      /> */}
     </>
   );
 };

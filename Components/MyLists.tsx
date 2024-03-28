@@ -30,7 +30,7 @@ const MyLists = observer(({}) => {
         keyExtractor={item => item.id}
         renderItem={({item}) => <ListItem text={item.text} />}
       />
-      {/* <SectionList
+      <SectionList
         sections={sectionData}
         renderSectionHeader={({section: {title}}) => <Text>{title}</Text>}
         renderItem={({item}) => (
@@ -38,7 +38,7 @@ const MyLists = observer(({}) => {
             <Text style={{color: '#fff'}}>{item}</Text>
           </View>
         )}
-      /> */}
+      />
     </>
   );
 });

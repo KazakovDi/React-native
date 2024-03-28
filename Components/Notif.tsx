@@ -37,23 +37,30 @@ const Notif = () => {
       console.log('fcmToken', fcmToken);
     }
   };
-
+  const notification = {
+    notification: {
+      title: 'Ваш заголовок уведомления',
+      body: 'Текст вашего уведомления',
+    },
+    to: 'dhWHfvjLQ5K2sGMnBpeBkE:APA91bF7VQUKZ3NkOUUGMTTq3HRjio8I-FDgpOokGzT-4p37MILSL8a_HolgH9t6HEnwPv32KE9dre1Ba5YN6ymax2AkYOZQhwvV7uCKtIjhjzpx7TBT33msQmyB0biC7QhMlFS_LUgq',
+  };
+  const options = {
+    method: 'POST',
+    headers: {
+      Authorization: `key=AAAA0zjnedg:APA91bHWtTPuZfBTpQVhcA2UfV8yFsI7ghInrt1fO70dOvnyOXHTxys8odMGi5aHcDY1okuk_k1scW8o2zJ9aKfYn9I7i4YaiQK5GbeRlW2ikgUpL4QcTKpJGl5Qtp2Zmq7ctARqAqKy`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(notification),
+  };
   checkToken();
   return (
     <TouchableOpacity
       onPress={() => {
-        fetch('https://fcm.googleapis.com/fcm/send', {
-          method: 'post',
-          body: JSON.stringify({
-            message: {
-              token: 'bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...',
-              notification: {
-                title: 'Portugal vs. Denmark',
-                body: 'great match!',
-              },
-            },
-          }),
-        });
+        setTimeout(() => {
+          fetch('https://fcm.googleapis.com/fcm/send', options)
+            .then(res => console.log('res', res))
+            .catch(err => console.log('err', err));
+        }, 3000);
       }}>
       <Text>Notif</Text>
     </TouchableOpacity>

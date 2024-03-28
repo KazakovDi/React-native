@@ -6,7 +6,8 @@
  */
 
 import React, {useEffect, useRef} from 'react';
-import {SafeAreaView, Text, Image, TouchableOpacity} from 'react-native';
+import {Text, ScrollView, Image, Switch} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import SplashScreen from 'react-native-splash-screen';
 import {observer} from 'mobx-react-lite';
@@ -39,8 +40,8 @@ import Biometrics from './Components/Biometrics';
 import Counter from './Components/Counter';
 import Notif from './Components/Notif';
 import RenderHtml from 'react-native-render-html';
+import SectionDevider from './Components/SectionDevider';
 export const ThemeContext = createContext({});
-
 const App = observer((): React.JSX.Element => {
   const source = {
     html: `
@@ -62,90 +63,95 @@ const App = observer((): React.JSX.Element => {
   }, []);
   return (
     <Provider store={store}>
-      <LinearGradient colors={MobXStore.themeProps.styles.$bgGradient}>
-        <SafeAreaView style={{height: '100%'}}>
-          <ThemeContext.Provider value={styles}>
-            <Text style={{color: styles.text.color}}>
-              {new Intl.DateTimeFormat('ru-RU', {
-                dateStyle: 'full',
-                timeStyle: 'medium',
-              }).format(MobXStore.date)}
-            </Text>
-            <Biometrics />
-            {/* <RenderHtml source={source} /> */}
-            {/* <MyButton
-            title={'Guide'}
-            onPress={() => start()}
-            color={styles.text.opposite}
-            bgColor={styles.bgSecondary.color}
-          /> */}
-            <Clip value={'124'} />
-            <GradientText />
-            {/* <FlashMsg /> */}
-            <CopilotProvider
-              arrowColor={'red'}
-              overlay="svg"
-              backdropColor="rgba(0,18,32,0.8)"
-              verticalOffset={26}
-              tooltipStyle={styles.tooltip}
-              tooltipComponent={TooltipComponent}>
-              <Guide />
-            </CopilotProvider>
-            <Conection />
-            <LangSwitch />
-            <Counter />
-            <Notif />
-            {/* <EncryptedStorageHandler /> */}
-            {/* <Device /> */}
-            {/* <ContactsList /> */}
-            {/* <Calendar />
-          <MyButton
-            title={'Change theme'}
-            onPress={() => MobXStore.switchTheme()}
-            color={styles.text.opposite}
-            bgColor={styles.bgSecondary.color}
-          />
-          <WebViewComponent />
-          <Geoloc /> */}
-            <MyLists />
-            {MobXStore.media.type === 'img' ? (
-              <>
-                <Image
-                  source={{uri: MobXStore.media.uri}}
-                  style={{width: '100%', height: 350}}
-                />
-                <MyButton
-                  color={styles.text.opposite}
-                  bgColor={styles.bgSecondary.color}
-                  title={'Share'}
-                  onPress={() => {
-                    Share.open({
-                      title: 'My media ',
-                      message: 'Check this out:',
-                      url: MobXStore.media.uri,
-                    });
-                  }}
-                />
-              </>
-            ) : MobXStore.media.type === 'vid' ? (
-              <>
-                <Text style={styles.text.color}>{MobXStore.media.uri}</Text>
-                <MyButton
-                  color={styles.text.opposite}
-                  bgColor={styles.bgSecondary.color}
-                  title={'Share'}
-                  onPress={() => {
-                    Share.open({
-                      title: 'My media ',
-                      message: 'Check this out:',
-                      url: MobXStore.media.uri,
-                    });
-                  }}
-                />
-              </>
-            ) : null}
-            <Camera />
-          </ThemeContext.Provider>
+      <LinearGradient
+        style={{flex: 1}}
+        colors={MobXStore.themeProps.styles.$bgGradient}>
+        <SafeAreaView style={{flex: 1}}>
+          <ScrollView>
+            <ThemeContext.Provider value={styles}>
+              <Text style={{color: styles.text.color}}>
+                {new Intl.DateTimeFormat('ru-RU', {
+                  dateStyle: 'full',
+                  timeStyle: 'medium',
+                }).format(MobXStore.date)}
+              </Text>
+              <Biometrics />
+              <RenderHtml source={source} />
+              <Clip value={'124'} />
+              <GradientText />
+              <FlashMsg />
+              <CopilotProvider
+                arrowColor={'red'}
+                overlay="svg"
+                backdropColor="rgba(0,18,32,0.8)"
+                verticalOffset={24}
+                tooltipStyle={styles.tooltip}
+                tooltipComponent={TooltipComponent}>
+                <Guide />
+              </CopilotProvider>
+              <Conection />
+              <LangSwitch />
+              <Counter />
+              <Notif />
+              {/* <EncryptedStorageHandler /> */}
+              <Device />
+              <ContactsList />
+              <Calendar />
+              <Switch
+                trackColor={{false: '#767577', true: '#81b0ff'}}
+                thumbColor={MobXStore.theme === 'light' ? '#f5dd4b' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => MobXStore.switchTheme()}
+                value={MobXStore.theme === 'light'}
+              />
+              <MyButton
+                title={'Change theme'}
+                onPress={() => MobXStore.switchTheme()}
+                color={styles.text.opposite}
+                bgColor={styles.bgSecondary.color}
+              />
+              <WebViewComponent />
+              <Geoloc />
+              <MyLists />
+              {MobXStore.media.type === 'img' ? (
+                <>
+                  <Image
+                    source={{uri: MobXStore.media.uri}}
+                    style={{width: '100%', height: 350}}
+                  />
+                  <MyButton
+                    color={styles.text.opposite}
+                    bgColor={styles.bgSecondary.color}
+                    title={'Share'}
+                    onPress={() => {
+                      Share.open({
+                        title: 'My media ',
+                        message: 'Check this out:',
+                        url: MobXStore.media.uri,
+                      });
+                    }}
+                  />
+                </>
+              ) : MobXStore.media.type === 'vid' ? (
+                <>
+                  <Text style={styles.text.color}>{MobXStore.media.uri}</Text>
+                  <MyButton
+                    color={styles.text.opposite}
+                    bgColor={styles.bgSecondary.color}
+                    title={'Share'}
+                    onPress={() => {
+                      Share.open({
+                        title: 'My media ',
+                        message: 'Check this out:',
+                        url: MobXStore.media.uri,
+                      });
+                    }}
+                  />
+                </>
+              ) : null}
+              <Camera />
+            </ThemeContext.Provider>
+          </ScrollView>
         </SafeAreaView>
       </LinearGradient>
     </Provider>
