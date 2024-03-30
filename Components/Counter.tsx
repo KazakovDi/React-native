@@ -8,12 +8,11 @@ const Counter = () => {
   const counter = useSelector(state => state.localization.counter);
   const data = useSelector(state => state.localization.users);
   const styles = useContext(ThemeContext);
-  console.log('dat', data);
   return (
     <>
       <TouchableOpacity
         onPress={() => {
-          console.log('dispatch');
+          dispatch({type: 'INCREMENT'});
 
           // dispatch({type: 'ASYNC_INCREMENT'});
         }}>
@@ -21,7 +20,7 @@ const Counter = () => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          dispatch({type: 'ASYNC_DECREMENT'});
+          dispatch({type: 'DECREMENT'});
         }}>
         <Text tyle={{color: styles.text.color}}>decrement</Text>
       </TouchableOpacity>

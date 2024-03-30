@@ -1,20 +1,24 @@
 import React, {useState} from 'react';
 import DatePicker from 'react-native-date-picker';
-import MyButton from './MyButton';
 import {useContext} from 'react';
 import {ThemeContext} from '../App';
 import MobxStore from '../Stores/MobxStore';
+import {TouchableOpacity, Text} from 'react-native';
 export default () => {
   const [open, setOpen] = useState(false);
   const styles = useContext(ThemeContext);
   return (
     <>
-      <MyButton
-        bgColor={styles.bgSecondary.color}
-        color={styles.text.opposite}
-        title="Change Date"
+      <TouchableOpacity
         onPress={() => setOpen(true)}
-      />
+        style={{color: styles.text.color}}>
+        <Text>
+          {new Intl.DateTimeFormat('ru-RU', {
+            dateStyle: 'full',
+            timeStyle: 'medium',
+          }).format(MobxStore.date)}
+        </Text>
+      </TouchableOpacity>
       <DatePicker
         theme={MobxStore.themeProps.theme}
         modal

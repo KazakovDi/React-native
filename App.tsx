@@ -6,13 +6,12 @@
  */
 
 import React, {useEffect, useRef} from 'react';
-import {Text, ScrollView, Image, Switch} from 'react-native';
+import {Text, ScrollView, View, Image, Switch} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import SplashScreen from 'react-native-splash-screen';
 import {observer} from 'mobx-react-lite';
 import MobXStore from './Stores/MobxStore';
-import Device from './Components/Device';
 import Share from 'react-native-share';
 import NetInfo from '@react-native-community/netinfo';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -35,12 +34,12 @@ import WebViewComponent from './Components/WebViewComponent';
 import {Provider, useSelector, useDispatch} from 'react-redux';
 import LangSwitch from './Components/LangSwitch';
 import store from './Stores/ReduxStore';
-import Conection from './Components/Conection';
 import Biometrics from './Components/Biometrics';
 import Counter from './Components/Counter';
 import Notif from './Components/Notif';
 import RenderHtml from 'react-native-render-html';
 import SectionDevider from './Components/SectionDevider';
+import BottomSection from './Components/BottomSection';
 export const ThemeContext = createContext({});
 const App = observer((): React.JSX.Element => {
   const source = {
@@ -69,12 +68,27 @@ const App = observer((): React.JSX.Element => {
         <SafeAreaView style={{flex: 1}}>
           <ScrollView>
             <ThemeContext.Provider value={styles}>
-              <Text style={{color: styles.text.color}}>
-                {new Intl.DateTimeFormat('ru-RU', {
-                  dateStyle: 'full',
-                  timeStyle: 'medium',
-                }).format(MobXStore.date)}
-              </Text>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <Calendar />
+                <LangSwitch />
+
+                <Switch
+                  trackColor={{false: '#767577', true: '#81b0ff'}}
+                  thumbColor={
+                    MobXStore.theme === 'light' ? '#f5dd4b' : '#f4f3f4'
+                  }
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={() => MobXStore.switchTheme()}
+                  value={MobXStore.theme === 'light'}
+                />
+              </View>
+
               <Biometrics />
               <RenderHtml source={source} />
               <Clip value={'124'} />
@@ -84,32 +98,18 @@ const App = observer((): React.JSX.Element => {
                 arrowColor={'red'}
                 overlay="svg"
                 backdropColor="rgba(0,18,32,0.8)"
-                verticalOffset={24}
+                verticalOffset={54}
                 tooltipStyle={styles.tooltip}
                 tooltipComponent={TooltipComponent}>
                 <Guide />
               </CopilotProvider>
-              <Conection />
-              <LangSwitch />
+
               <Counter />
               <Notif />
               {/* <EncryptedStorageHandler /> */}
-              <Device />
-              <ContactsList />
-              <Calendar />
-              <Switch
-                trackColor={{false: '#767577', true: '#81b0ff'}}
-                thumbColor={MobXStore.theme === 'light' ? '#f5dd4b' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={() => MobXStore.switchTheme()}
-                value={MobXStore.theme === 'light'}
-              />
-              <MyButton
-                title={'Change theme'}
-                onPress={() => MobXStore.switchTheme()}
-                color={styles.text.opposite}
-                bgColor={styles.bgSecondary.color}
-              />
+
+              {/* <ContactsList /> */}
+
               <WebViewComponent />
               <Geoloc />
               <MyLists />
@@ -150,6 +150,7 @@ const App = observer((): React.JSX.Element => {
                 </>
               ) : null}
               <Camera />
+              <BottomSection />
             </ThemeContext.Provider>
           </ScrollView>
         </SafeAreaView>

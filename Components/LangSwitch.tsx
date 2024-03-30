@@ -1,30 +1,30 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import MyButton from './MyButton';
-import {Provider, useSelector, useDispatch} from 'react-redux';
+import {Provider, useSelector, useDispatch, Switch} from 'react-redux';
+import {ThemeContext} from '../App';
 
 const LangSwitch = () => {
+  const [langState, setState] = useState();
   const dispatch = useDispatch();
-  const reducerState = useSelector(state => state);
+  const localization = useSelector(state => state.localization);
+  console.log('loca', localization);
+  const styles = useContext(ThemeContext);
   return (
     <>
       <MyButton
-        color="#fff"
-        bgColor="red"
-        title="ru"
-        onPress={() => dispatch({type: 'CHNG_LOC', payload: 'ru'})}
+        color={styles.text.opposite}
+        bgColor={styles.bgSecondary.color}
+        title={localization.lang}
+        onPress={() => {
+          if (localization.lang === 'ru') {
+            dispatch({type: 'CHNG_LOC', payload: 'en'});
+            setState({});
+          } else {
+            dispatch({type: 'CHNG_LOC', payload: 'ru'});
+            setState({});
+          }
+        }}
       />
-      <MyButton
-        color="#fff"
-        bgColor="red"
-        title="en"
-        onPress={() => dispatch({type: 'CHNG_LOC', payload: 'en'})}
-      />
-      {/* <MyButton
-        color="#fff"
-        bgColor="red"
-        title="en"
-        onPress={() => dispatch({type: 'ASYNC_FETCH'})}
-      /> */}
     </>
   );
 };

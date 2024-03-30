@@ -6,16 +6,20 @@ console.log('thunk', thunk);
 // const sagaMiddleware = createSagaMiddleware();
 let localizationStrings = new LocalizedStrings({
   en: {
+    lang: 'en',
     skip: 'Skip',
     prev: 'Prev',
     next: 'Next',
     end: 'End',
+    gradient: 'Gradient',
     firstGuideStep:
       'First step many text many text many text many text many text',
     secondGuideStep: 'Second step',
     thirdGuideStep: 'Third step',
   },
   ru: {
+    gradient: 'Градиент',
+    lang: 'ru',
     skip: 'Пропус.',
     prev: 'Пред.',
     next: 'Далее',
