@@ -1,9 +1,9 @@
 // In index.js of a new project
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
-import {Navigation} from 'react-native-navigation';
+import {Navigation, Modal} from 'react-native-navigation';
 
-const LoginScreen = () => {
+const LoginScreen = props => {
   return (
     <View style={styles.root}>
       <Button
@@ -11,10 +11,31 @@ const LoginScreen = () => {
         color="#710ce3"
         onPress={() => Navigation.setRoot(mainRoot)}
       />
+      <Button
+        title="Go to Register"
+        color="#710ce3"
+        onPress={() =>
+          Navigation.push(props.componentId, {
+            component: {
+              name: 'Register',
+            },
+          })
+        }
+      />
     </View>
   );
 };
-
+const RegisterScreen = () => {
+  return (
+    <View style={styles.root}>
+      <Button
+        title="Register"
+        color="#710ce3"
+        onPress={() => Navigation.setRoot(mainRoot)}
+      />
+    </View>
+  );
+};
 const HomeScreen = props => {
   return (
     <View style={styles.root}>
@@ -34,6 +55,43 @@ const HomeScreen = props => {
     </View>
   );
 };
+const OtherScreen = props => {
+  const [isModalShown, setIsModalShown] = useState(false);
+  return (
+    <View style={styles.root}>
+      <Text>OtherScreen</Text>
+
+      <Button
+        title="Show modal"
+        color="#710ce3"
+        onPress={() => setIsModalShown(true)}
+      />
+      <Modal
+        visible={isModalShown}
+        onRequestClose={() => {
+          setIsModalShown(false);
+        }}
+        animationType="slide">
+        <Text>Some Modal info</Text>
+        <Button
+          title="Dismiss declared Modal"
+          testID="someId"
+          onPress={() => setIsModalShown(false)}
+        />
+      </Modal>
+    </View>
+  );
+};
+RegisterScreen.options = {
+  topBar: {
+    title: {text: 'Register'},
+  },
+};
+LoginScreen.options = {
+  topBar: {
+    title: {text: 'Login'},
+  },
+};
 HomeScreen.options = {
   topBar: {
     title: {
@@ -44,7 +102,16 @@ HomeScreen.options = {
     text: 'Home',
   },
 };
-
+OtherScreen.options = {
+  topBar: {
+    title: {
+      text: 'Other',
+    },
+  },
+  bottomTab: {
+    text: 'Other',
+  },
+};
 const SettingsScreen = () => {
   return (
     <View style={styles.root}>
@@ -64,8 +131,11 @@ SettingsScreen.options = {
 };
 
 Navigation.registerComponent('Login', () => LoginScreen);
+Navigation.registerComponent('Register', () => RegisterScreen);
+
 Navigation.registerComponent('Home', () => HomeScreen);
 Navigation.registerComponent('Settings', () => SettingsScreen);
+Navigation.registerComponent('OtherScreen', () => OtherScreen);
 
 const mainRoot = {
   root: {
@@ -93,14 +163,36 @@ const mainRoot = {
             ],
           },
         },
+        {
+          stack: {
+            children: [
+              {
+                component: {
+                  name: 'OtherScreen',
+                },
+              },
+            ],
+          },
+        },
       ],
     },
   },
 };
 const loginRoot = {
   root: {
-    component: {
-      name: 'Login',
+    stack: {
+      children: [
+        {
+          component: {
+            name: 'Login',
+          },
+        },
+        {
+          component: {
+            name: 'Register',
+          },
+        },
+      ],
     },
   },
 };
