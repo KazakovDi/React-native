@@ -1,11 +1,25 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {reducer} from './reducer';
 import LocalizedStrings from 'react-native-localization';
+import {rootWacher} from './rootWatcher';
 import {thunk} from 'redux-thunk';
-console.log('thunk', thunk);
-// const sagaMiddleware = createSagaMiddleware();
+import createSagaMiddleware from 'redux-saga';
+const sagaMiddleware = createSagaMiddleware();
 let localizationStrings = new LocalizedStrings({
   en: {
+    bottomSheet: 'Show bottom sheet',
+    takePhoto: 'Photo',
+    takeVideo: 'Video',
+    add: 'Add',
+    name: 'Name',
+    phone: 'Phone',
+    save: 'Save',
+    clear: 'Clear',
+    defaultPlaceholder: 'Input your value here',
+    guide: 'Guide',
+    dateFormatLang: 'en-US',
+    flashMsgBtn: 'Show flash message',
+    flashMsg: 'Flash message',
     lang: 'en',
     skip: 'Skip',
     prev: 'Prev',
@@ -18,6 +32,19 @@ let localizationStrings = new LocalizedStrings({
     thirdGuideStep: 'Third step',
   },
   ru: {
+    bottomSheet: 'Доп. окно',
+    takePhoto: 'Фото',
+    takeVideo: 'Видео',
+    add: 'Добавить',
+    name: 'Имя',
+    phone: 'Телефон',
+    save: 'Сохранить',
+    clear: 'Очистить',
+    defaultPlaceholder: 'Введите значение',
+    guide: 'Гайд',
+    dateFormatLang: 'ru-RU',
+    flashMsgBtn: 'Показать сообщение',
+    flashMsg: 'Сообщение',
     gradient: 'Градиент',
     lang: 'ru',
     skip: 'Пропус.',
@@ -41,8 +68,8 @@ const reducers = combineReducers({
 const store = createStore(
   reducers,
   // initialState,
-  // applyMiddleware(sagaMiddleware),
-  applyMiddleware(thunk),
+  applyMiddleware(sagaMiddleware),
+  // applyMiddleware(thunk),
 );
-// sagaMiddleware.run(rootWacher);
+sagaMiddleware.run(rootWacher);
 export default store;

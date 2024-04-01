@@ -1,18 +1,12 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import {useContext} from 'react';
-import {ThemeContext} from '../App';
-import MyButton from './MyButton';
 import {useCopilot} from 'react-native-copilot';
 import {useSelector} from 'react-redux';
 
-const TooltipComponent = props => {
+const TooltipComponent = () => {
   const state = useSelector(state => state.localization.localization);
   const {goToNext, goToPrev, stop, currentStep, isFirstStep, isLastStep} =
     useCopilot();
-
-  console.log('state', state);
-  console.log('isFirstStep', isFirstStep);
 
   return (
     <View style={{minWidth: 150}}>

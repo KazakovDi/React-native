@@ -15,25 +15,20 @@ const Guide = () => {
   const CopilotBlock = walkthroughable(View);
   const {start} = useCopilot();
   const styles = useContext(ThemeContext);
-  const redState = useSelector(state => state.localization);
+  const localization = useSelector(state => state.localization.localization);
+
   return (
     <View>
-      <CopilotStep
-        text={redState.localization.firstGuideStep}
-        order={1}
-        name="hello">
+      <CopilotStep text={localization.firstGuideStep} order={1} name="hello">
         <CopilotText>Text1</CopilotText>
       </CopilotStep>
       <CopilotStep
-        text={redState.localization.secondGuideStep}
+        text={localization.secondGuideStep}
         order={2}
         name="description">
         <CopilotText>Text2</CopilotText>
       </CopilotStep>
-      <CopilotStep
-        text={redState.localization.thirdGuideStep}
-        order={3}
-        name="end">
+      <CopilotStep text={localization.thirdGuideStep} order={3} name="end">
         <CopilotBlock
           style={{
             backgroundColor: '#fff',
@@ -42,7 +37,7 @@ const Guide = () => {
           }}></CopilotBlock>
       </CopilotStep>
       <MyButton
-        title={'Guide'}
+        title={localization.guide}
         onPress={() => start()}
         color={styles.text.opposite}
         bgColor={styles.bgSecondary.color}

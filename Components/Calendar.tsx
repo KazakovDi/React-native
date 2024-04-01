@@ -4,16 +4,19 @@ import {useContext} from 'react';
 import {ThemeContext} from '../App';
 import MobxStore from '../Stores/MobxStore';
 import {TouchableOpacity, Text} from 'react-native';
+import {useSelector} from 'react-redux';
+
 export default () => {
   const [open, setOpen] = useState(false);
   const styles = useContext(ThemeContext);
+  const localization = useSelector(state => state.localization.localization);
   return (
     <>
       <TouchableOpacity
         onPress={() => setOpen(true)}
         style={{color: styles.text.color}}>
         <Text>
-          {new Intl.DateTimeFormat('ru-RU', {
+          {new Intl.DateTimeFormat(localization.dateFormatLang, {
             dateStyle: 'full',
             timeStyle: 'medium',
           }).format(MobxStore.date)}

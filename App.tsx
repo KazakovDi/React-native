@@ -18,11 +18,9 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import FlashMsg from './Components/FlashMsg';
 import GradientText from './Components/GradientText';
 import Camera from './Components/Camera';
-import MobxStore from './Stores/MobxStore';
 import MyButton from './Components/MyButton';
 import {createContext} from 'react';
 import EncryptedStorageHandler from './Components/EncryptedStorageHandler';
-import MyLists from './Components/MyLists';
 import ContactsList from './Components/ContactsList';
 import Clip from './Components/Clip';
 import Calendar from './Components/Calendar';
@@ -34,12 +32,11 @@ import WebViewComponent from './Components/WebViewComponent';
 import {Provider, useSelector, useDispatch} from 'react-redux';
 import LangSwitch from './Components/LangSwitch';
 import store from './Stores/ReduxStore';
-import Biometrics from './Components/Biometrics';
 import Counter from './Components/Counter';
 import Notif from './Components/Notif';
 import RenderHtml from 'react-native-render-html';
-import SectionDevider from './Components/SectionDevider';
 import BottomSection from './Components/BottomSection';
+import AnimatedComponent from './Components/AnimatedComponent';
 export const ThemeContext = createContext({});
 const App = observer((): React.JSX.Element => {
   const source = {
@@ -77,7 +74,6 @@ const App = observer((): React.JSX.Element => {
                 }}>
                 <Calendar />
                 <LangSwitch />
-
                 <Switch
                   trackColor={{false: '#767577', true: '#81b0ff'}}
                   thumbColor={
@@ -88,8 +84,7 @@ const App = observer((): React.JSX.Element => {
                   value={MobXStore.theme === 'light'}
                 />
               </View>
-
-              <Biometrics />
+              <AnimatedComponent />
               <RenderHtml source={source} />
               <Clip value={'124'} />
               <GradientText />
@@ -106,13 +101,10 @@ const App = observer((): React.JSX.Element => {
 
               <Counter />
               <Notif />
-              {/* <EncryptedStorageHandler /> */}
-
-              {/* <ContactsList /> */}
-
+              <EncryptedStorageHandler />
+              <ContactsList />
               <WebViewComponent />
               <Geoloc />
-              <MyLists />
               {MobXStore.media.type === 'img' ? (
                 <>
                   <Image

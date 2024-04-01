@@ -3,10 +3,13 @@ export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'CHNG_LOC':
       state.localization.setLanguage(action.payload);
-      const newLoc = {...state.localization};
+      const newLoc = {
+        ...state.localization,
+      };
+      newLoc.setLanguage = state.localization.setLanguage;
+      newLoc._fallbackValues = state.localization._fallbackValues;
+      return {...state, localization: newLoc};
 
-      let clone = {...state, localization: newLoc};
-      return {...clone};
     case 'INCREMENT': {
       state.counter++;
       return {...state};

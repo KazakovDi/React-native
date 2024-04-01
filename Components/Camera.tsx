@@ -5,13 +5,16 @@ import {RNCamera} from 'react-native-camera';
 import RBSheet from '@poki_san/react-native-bottom-sheet';
 import MobxStore from '../Stores/MobxStore';
 import {observer} from 'mobx-react-lite';
-import EStyleSheet from 'react-native-extended-stylesheet';
 import {ThemeContext} from '../App';
+import {useSelector} from 'react-redux';
+
 import MyButton from './MyButton';
 const Camera = observer(() => {
   const cameraRef = useRef(null);
   const bottomSheetRef = useRef();
   const styles = useContext(ThemeContext);
+  const localization = useSelector(state => state.localization.localization);
+
   const takePicture = async () => {
     const dat = await cameraRef.current.takePictureAsync();
     MobxStore.savePhoto(dat.uri);
@@ -55,7 +58,9 @@ const Camera = observer(() => {
                 });
               });
             }}>
-            <Text style={{color: styles.text.color, fontSize: 22}}>Photo</Text>
+            <Text style={{color: styles.text.color, fontSize: 22}}>
+              {localization.takePhoto}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onLongPress={() => {
@@ -68,12 +73,14 @@ const Camera = observer(() => {
               cameraRef.current.stopRecording();
               bottomSheetRef.current.close();
             }}>
-            <Text style={{color: styles.text.color, fontSize: 22}}>Vid</Text>
+            <Text style={{color: styles.text.color, fontSize: 22}}>
+              {localization.takeVideo}
+            </Text>
           </TouchableOpacity>
         </View>
       </RBSheet>
       <MyButton
-        title="Show bottom sheet"
+        title={localization.bottomSheet}
         color={styles.text.opposite}
         bgColor={styles.bgSecondary.color}
         onPress={() => bottomSheetRef.current.open()}

@@ -12,9 +12,9 @@ const Counter = () => {
     <>
       <TouchableOpacity
         onPress={() => {
-          dispatch({type: 'INCREMENT'});
+          // dispatch({type: 'INCREMENT'});
 
-          // dispatch({type: 'ASYNC_INCREMENT'});
+          dispatch({type: 'ASYNC_INCREMENT'});
         }}>
         <Text>increment</Text>
       </TouchableOpacity>
@@ -27,8 +27,8 @@ const Counter = () => {
       <Text style={{fontSize: 22, color: styles.text.color}}>{counter}</Text>
       <TouchableOpacity
         onPress={() => {
-          dispatch(FetchUsers());
-          // dispatch({type: 'FETCH_USERS'});
+          // dispatch(FetchUsers());
+          dispatch({type: 'FETCH_USERS'});
         }}>
         <Text style={{color: styles.text.color}}>GET USERS</Text>
       </TouchableOpacity>

@@ -1,27 +1,23 @@
 import React, {useContext, useState} from 'react';
 import MyButton from './MyButton';
-import {Provider, useSelector, useDispatch, Switch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {ThemeContext} from '../App';
 
 const LangSwitch = () => {
-  const [langState, setState] = useState();
   const dispatch = useDispatch();
-  const localization = useSelector(state => state.localization);
-  console.log('loca', localization);
+  const state = useSelector(state => state);
   const styles = useContext(ThemeContext);
   return (
     <>
       <MyButton
         color={styles.text.opposite}
         bgColor={styles.bgSecondary.color}
-        title={localization.lang}
+        title={state.localization.localization.lang}
         onPress={() => {
-          if (localization.lang === 'ru') {
+          if (state.localization.localization.lang === 'ru') {
             dispatch({type: 'CHNG_LOC', payload: 'en'});
-            setState({});
           } else {
             dispatch({type: 'CHNG_LOC', payload: 'ru'});
-            setState({});
           }
         }}
       />

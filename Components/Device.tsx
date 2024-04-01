@@ -9,9 +9,6 @@ const Device = () => {
   const styles = useContext(ThemeContext);
   return (
     <View>
-      <Text style={{color: styles.text.color, fontWeight: 700, fontSize: 26}}>
-        Device info:
-      </Text>
       <Text style={{color: styles.text.color}}> {brand + ' ' + device}</Text>
     </View>
   );

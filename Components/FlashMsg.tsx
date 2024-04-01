@@ -6,18 +6,21 @@ import Pill from '../assets/svg/pill.svg';
 import {observer} from 'mobx-react-lite';
 import {ThemeContext} from '../App';
 import MyButton from './MyButton';
+import {useSelector} from 'react-redux';
 const FlashMsg = observer(() => {
   const styles = useContext(ThemeContext);
+  const localization = useSelector(state => state.localization.localization);
+  console.log('loca', localization);
   return (
     <>
       <FlashMessage animationDuration={500} position="top" />
       <MyButton
-        title="Show flash message"
+        title={localization.flashMsgBtn}
         color={styles.text.opposite}
         onPress={() => {
           showMessage({
             type: 'info',
-            message: 'Flash message',
+            message: localization.flashMsg,
             backgroundColor: styles.bgSecondary.color,
             color: styles.text.opposite,
             icon: () => (

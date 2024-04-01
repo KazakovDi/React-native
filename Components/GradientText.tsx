@@ -6,7 +6,6 @@ import {useSelector} from 'react-redux';
 
 const GradientText = () => {
   const localization = useSelector(state => state.localization.localization);
-  console.log('gradient', localization.gradient);
   return (
     <MaskedView
       maskElement={

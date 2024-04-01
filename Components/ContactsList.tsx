@@ -5,12 +5,15 @@ import {View, Text, FlatList, Image, TextInput} from 'react-native';
 import ListItem from './ListItem';
 import MyButton from './MyButton';
 import {ThemeContext} from '../App';
+import {useSelector} from 'react-redux';
 
 const ContactsList = () => {
   const [contactList, setContact] = useState([]);
   const nameRef = useRef(null);
   const phoneRef = useRef(null);
   const styles = useContext(ThemeContext);
+  const localization = useSelector(state => state.localization.localization);
+
   useEffect(() => {
     request(PERMISSIONS.ANDROID.READ_CONTACTS).then(res => {
       Contacts.getAll().then(res => {
@@ -25,13 +28,13 @@ const ContactsList = () => {
           style={{borderWidth: 1, borderColor: '#000'}}
           onChangeText={e => (nameRef.current.value = e)}
           ref={nameRef}
-          plaecolder={'Name'}
+          placeholder={localization.name}
         />
         <TextInput
           style={{borderWidth: 1, borderColor: '#000'}}
           onChangeText={e => (phoneRef.current.value = e)}
           ref={phoneRef}
-          plaecolder={'Phone'}
+          placeholder={localization.phone}
         />
         <MyButton
           onPress={() => {
@@ -46,7 +49,7 @@ const ContactsList = () => {
                 .catch(err => console.log('err', err));
             });
           }}
-          title="Add"
+          title={localization.add}
           bgColor="#000"
           color="#fff"
         />
@@ -56,11 +59,14 @@ const ContactsList = () => {
         keyExtractor={item => item.rawContactId}
         data={contactList}
         renderItem={({item}) => (
-          <View>
+          <View style={{display: 'flex', flexDirection: 'row'}}>
             <Text style={{color: styles.text.color}}>{item.givenName}</Text>
-            <Text style={{color: styles.text.color}}>
-              {item.phoneNumbers[0].number}
-            </Text>
+            {item.phoneNumbers.length ? (
+              <Text style={{color: styles.text.color}}>
+                {' ' + item.phoneNumbers[0].number}
+              </Text>
+            ) : null}
+
             <Image source={item.thumbnailPath} />
           </View>
         )}

@@ -29,10 +29,12 @@ const MyLists = observer(({}) => {
         numColumns={2}
         keyExtractor={item => item.id}
         renderItem={({item}) => <ListItem text={item.text} />}
+        contentContainerStyle={{flexGrow: 1}}
       />
       <SectionList
         sections={sectionData}
         renderSectionHeader={({section: {title}}) => <Text>{title}</Text>}
+        contentContainerStyle={{flexGrow: 1}}
         renderItem={({item}) => (
           <View style={{marginLeft: 5, backgroundColor: '#000', color: '#fff'}}>
             <Text style={{color: '#fff'}}>{item}</Text>
