@@ -1,12 +1,18 @@
-import {put, takeEvery} from 'redux-saga/effects';
-const delay = () => new Promise(res => setTimeout(res, 500));
-
+import {put, takeEvery, call, select} from 'redux-saga/effects';
+const delay = ms => new Promise(res => setTimeout(res, ms));
 function* incrementWorker() {
-  yield delay();
-  yield put({type: 'INCREMENT'});
+  yield call(delay, 1000);
+  const counter = yield select(state => state.localization.counter);
+
+  if (counter % 5 === 0) {
+    console.log('%');
+    yield put({type: 'D_INCREMENT'});
+  } else {
+    yield put({type: 'INCREMENT'});
+  }
 }
 function* decrementWorker() {
-  yield delay();
+  yield call(delay, 1000);
   yield put({type: 'DECREMENT'});
 }
 export function* counterWatcher() {

@@ -14,6 +14,10 @@ export const reducer = (state = initialState, action) => {
       state.counter++;
       return {...state};
     }
+    case 'D_INCREMENT': {
+      state.counter += 2;
+      return {...state};
+    }
     case 'DECREMENT': {
       state.counter--;
       return {...state};

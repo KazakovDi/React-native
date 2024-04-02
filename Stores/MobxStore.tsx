@@ -24,6 +24,7 @@ class MobXStore {
   store = {};
   media = {};
   theme = 'light';
+  counter = 0;
   themeProps = {
     theme: 'light',
     styles: lightTheme,
@@ -56,6 +57,12 @@ class MobXStore {
     EncryptedStorage.clear().then(() => {
       this.store = {};
     });
+  }
+  public Inc() {
+    this.counter++;
+  }
+  public Dec() {
+    this.counter--;
   }
   public GetData() {
     EncryptedStorage.getItem('FAKE_DATA').then(res => {

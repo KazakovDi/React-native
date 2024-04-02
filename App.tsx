@@ -13,7 +13,6 @@ import SplashScreen from 'react-native-splash-screen';
 import {observer} from 'mobx-react-lite';
 import MobXStore from './Stores/MobxStore';
 import Share from 'react-native-share';
-import NetInfo from '@react-native-community/netinfo';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import FlashMsg from './Components/FlashMsg';
 import GradientText from './Components/GradientText';
@@ -37,6 +36,7 @@ import Notif from './Components/Notif';
 import RenderHtml from 'react-native-render-html';
 import BottomSection from './Components/BottomSection';
 import AnimatedComponent from './Components/AnimatedComponent';
+import Test from './Components/Test';
 export const ThemeContext = createContext({});
 const App = observer((): React.JSX.Element => {
   const source = {
@@ -85,6 +85,7 @@ const App = observer((): React.JSX.Element => {
                 />
               </View>
               <AnimatedComponent />
+              {/* <Test /> */}
               <RenderHtml source={source} />
               <Clip value={'124'} />
               <GradientText />

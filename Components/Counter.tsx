@@ -20,7 +20,8 @@ const Counter = () => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          dispatch({type: 'DECREMENT'});
+          // dispatch({type: 'DECREMENT'});
+          dispatch({type: 'ASYNC_DECREMENT'});
         }}>
         <Text tyle={{color: styles.text.color}}>decrement</Text>
       </TouchableOpacity>
