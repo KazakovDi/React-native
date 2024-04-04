@@ -21,9 +21,9 @@ const lightTheme = {
   ],
 };
 class MobXStore {
-  store = {};
+  store: {[Name: string]: string} = {};
   media = {};
-  theme = 'light';
+  theme: 'light' | 'dark' = 'light';
   counter = 0;
   themeProps = {
     theme: 'light',
@@ -46,10 +46,10 @@ class MobXStore {
     makeAutoObservable(this, {}, {});
   }
 
-  public saveToStorage(key, value) {
+  public saveToStorage(key: string, value: string) {
     if (!this.store[key]) this.store[key] = [];
     const stringifyedValue = JSON.stringify([...this.store[key], value]);
-    EncryptedStorage.setItem(key, stringifyedValue).then(res => {
+    EncryptedStorage.setItem(key, stringifyedValue).then((res: string) => {
       this.store[key] = JSON.parse(res);
     });
   }
@@ -65,7 +65,7 @@ class MobXStore {
     this.counter--;
   }
   public GetData() {
-    EncryptedStorage.getItem('FAKE_DATA').then(res => {
+    EncryptedStorage.getItem('FAKE_DATA').then((res: null | string) => {
       if (res !== null) {
         const value = JSON.parse(res);
         this.store['FAKE_DATA'] = value;

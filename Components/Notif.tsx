@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import {Notifications} from 'react-native-notifications';
 import messaging from '@react-native-firebase/messaging';
 
 const Notif = () => {
+  const [fcmKey, setFcmKey] = useState('');
   Notifications.registerRemoteNotifications();
   Notifications.events().registerNotificationReceivedForeground(
     (notification: any, completion: (response: any) => void) => {
@@ -33,6 +34,7 @@ const Notif = () => {
   );
   const checkToken = async () => {
     const fcmToken = await messaging().getToken();
+    setFcmKey(fcmToken);
     if (fcmToken) {
       console.log('fcmToken', fcmToken);
     }
@@ -42,7 +44,7 @@ const Notif = () => {
       title: 'Ваш заголовок уведомления',
       body: 'Текст вашего уведомления',
     },
-    to: 'dhWHfvjLQ5K2sGMnBpeBkE:APA91bF7VQUKZ3NkOUUGMTTq3HRjio8I-FDgpOokGzT-4p37MILSL8a_HolgH9t6HEnwPv32KE9dre1Ba5YN6ymax2AkYOZQhwvV7uCKtIjhjzpx7TBT33msQmyB0biC7QhMlFS_LUgq',
+    to: fcmKey,
   };
   const options = {
     method: 'POST',

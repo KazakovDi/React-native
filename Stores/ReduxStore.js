@@ -67,7 +67,6 @@ const reducers = combineReducers({
 });
 const store = createStore(
   reducers,
-  // initialState,
   applyMiddleware(sagaMiddleware),
   // applyMiddleware(thunk),
 );
